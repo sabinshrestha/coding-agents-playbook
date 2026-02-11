@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Coding Agents Productivity Cheatsheet</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --surface-2: #1a1a26;
+    --border: #2a2a3a;
+    --accent-cyan: #00e5ff;
+    --accent-purple: #a855f7;
+    --accent-orange: #ff6b35;
+    --accent-green: #22c55e;
+    --accent-yellow: #facc15;
+    --accent-pink: #f472b6;
+    --text: #e8e8f0;
+    --text-dim: #8888a0;
+    --text-bright: #ffffff;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .page {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 40px 32px 60px;
+  }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    margin-bottom: 48px;
+    position: relative;
+  }
+
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -24px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+  }
+
+  .badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    border: 1px solid var(--accent-cyan);
+    padding: 6px 18px;
+    border-radius: 20px;
+    margin-bottom: 16px;
+    opacity: 0.9;
+  }
+
+  .header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 900;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    background: linear-gradient(135deg, #fff 0%, var(--accent-cyan) 50%, var(--accent-purple) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .header .subtitle {
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* TOOL COMPARISON */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--accent-cyan);
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 20px;
+    color: var(--text-bright);
+  }
+
+  /* TOOL CARDS */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 52px;
+  }
+
+  .tool-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s;
+  }
+
+  .tool-card:hover { transform: translateY(-2px); }
+
+  .tool-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .tool-card.claude::before { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); }
+  .tool-card.codex::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow)); }
+  .tool-card.cursor::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink)); }
+  .tool-card.stack::before { background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange)); }
+
+  .tool-card .tool-name {
+    font-family: 'Outfit', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+
+  .tool-card.claude .tool-name { color: var(--accent-cyan); }
+  .tool-card.codex .tool-name { color: var(--accent-green); }
+  .tool-card.cursor .tool-name { color: var(--accent-orange); }
+  .tool-card.stack .tool-name { color: var(--accent-yellow); }
+
+  .tool-card .tool-tag {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+
+  .tool-card .tool-desc {
+    font-size: 13.5px;
+    line-height: 1.6;
+    color: var(--text);
+  }
+
+  .tool-card .strength {
+    display: inline-block;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-right: 4px;
+    font-weight: 600;
+  }
+
+  .tool-card.claude .strength { background: rgba(0,229,255,0.1); color: var(--accent-cyan); }
+  .tool-card.codex .strength { background: rgba(34,197,94,0.1); color: var(--accent-green); }
+  .tool-card.cursor .strength { background: rgba(255,107,53,0.1); color: var(--accent-orange); }
+  .tool-card.stack .strength { background: rgba(250,204,21,0.1); color: var(--accent-yellow); }
+
+  /* TIPS SECTION */
+  .tips-section {
+    margin-bottom: 52px;
+  }
+
+  .tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 16px;
+  }
+
+  .tip-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+    transition: transform 0.2s;
+  }
+
+  .tip-card:hover { transform: translateY(-2px); }
+
+  .tip-num {
+    font-family: 'Outfit', sans-serif;
+    font-size: 32px;
+    font-weight: 900;
+    line-height: 1;
+    min-width: 40px;
+    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .tip-content h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .tip-content p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--text-dim);
+  }
+
+  .tip-content .highlight {
+    color: var(--accent-cyan);
+    font-weight: 600;
+  }
+
+  /* ARCHITECTURE COMPARISON */
+  .arch-section {
+    margin-bottom: 52px;
+  }
+
+  .arch-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .arch-grid { grid-template-columns: 1fr; }
+  }
+
+  .arch-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+  }
+
+  .arch-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .arch-card .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+
+  .dot.cyan { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
+  .dot.green { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
+
+  .arch-card .flow {
+    font-family: 'Space Mono', monospace;
+    font-size: 11.5px;
+    line-height: 2;
+    color: var(--text);
+  }
+
+  .arch-card .flow .arrow {
+    color: var(--text-dim);
+    margin: 0 4px;
+  }
+
+  .arch-card .flow .node {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-size: 11px;
+  }
+
+  .node.cyan-bg { background: rgba(0,229,255,0.12); color: var(--accent-cyan); }
+  .node.green-bg { background: rgba(34,197,94,0.12); color: var(--accent-green); }
+
+  /* CONTEXT WARNING */
+  .warning-banner {
+    background: linear-gradient(135deg, rgba(255,107,53,0.08), rgba(250,204,21,0.08));
+    border: 1px solid rgba(255,107,53,0.25);
+    border-radius: 16px;
+    padding: 24px 28px;
+    margin-bottom: 52px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+
+  .warning-icon {
+    font-size: 28px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+
+  .warning-banner h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--accent-orange);
+    margin-bottom: 8px;
+  }
+
+  .warning-banner p {
+    font-size: 13px;
+    line-height: 1.65;
+    color: var(--text);
+  }
+
+  .warning-banner .mono {
+    font-family: 'Space Mono', monospace;
+    background: rgba(255,107,53,0.12);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 11px;
+    color: var(--accent-orange);
+  }
+
+  /* SUPERPOWER / WEAKNESS */
+  .sw-section {
+    margin-bottom: 52px;
+  }
+
+  .sw-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  @media (max-width: 700px) {
+    .sw-grid { grid-template-columns: 1fr; }
+    .tips-grid { grid-template-columns: 1fr; }
+  }
+
+  .sw-card {
+    border-radius: 16px;
+    padding: 24px;
+    border: 1px solid var(--border);
+  }
+
+  .sw-card.super {
+    background: linear-gradient(135deg, rgba(34,197,94,0.06), rgba(0,229,255,0.06));
+    border-color: rgba(34,197,94,0.2);
+  }
+
+  .sw-card.weak {
+    background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(244,114,182,0.06));
+    border-color: rgba(255,107,53,0.2);
+  }
+
+  .sw-card h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 14px;
+  }
+
+  .sw-card.super h3 { color: var(--accent-green); }
+  .sw-card.weak h3 { color: var(--accent-orange); }
+
+  .sw-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13.5px;
+    line-height: 1.55;
+  }
+
+  .sw-item .icon { flex-shrink: 0; font-size: 14px; margin-top: 1px; }
+
+  /* QUOTE */
+  .quote-card {
+    background: var(--surface);
+    border-left: 3px solid var(--accent-purple);
+    border-radius: 0 16px 16px 0;
+    padding: 24px 28px;
+    margin-bottom: 52px;
+    font-style: italic;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .quote-card .attr {
+    font-style: normal;
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top: 10px;
+    font-family: 'Space Mono', monospace;
+  }
+
+  /* MINDSET */
+  .mindset-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 52px;
+  }
+
+  @media (max-width: 800px) {
+    .mindset-row { grid-template-columns: 1fr; }
+  }
+
+  .mindset-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    text-align: center;
+  }
+
+  .mindset-card .emoji { font-size: 32px; margin-bottom: 10px; }
+
+  .mindset-card h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--text-bright);
+    margin-bottom: 6px;
+  }
+
+  .mindset-card p {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.6;
+  }
+
+  /* FOOTER */
+  .footer {
+    text-align: center;
+    font-size: 11px;
+    color: var(--text-dim);
+    font-family: 'Space Mono', monospace;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="badge">Quick Reference Cheatsheet</div>
+    <h1>Top 1% Coding Agent<br>Productivity Playbook</h1>
+    <div class="subtitle">From YC's Light Cone — Calvin French-Owen (Segment, ex-OpenAI Codex) × Gary Tan</div>
+  </div>
+
+  <!-- TOOL CARDS -->
+  <div class="section-label">01 — Your Arsenal</div>
+  <div class="section-title">Pick the Right Tool for the Job</div>
+  <div class="tools-grid">
+    <div class="tool-card claude">
+      <div class="tool-name">Claude Code</div>
+      <div class="tool-tag">Daily Driver • CLI</div>
+      <div class="tool-desc">
+        Splits tasks across <strong>sub-agent context windows</strong> (Haiku scouts the file system). Best-in-class at context engineering. Feels like "flying through the code." Access your dev DB, prod DB, and full local env.
+      </div>
+      <span class="strength">Context splitting</span>
+      <span class="strength">Frontend</span>
+      <span class="strength">Rails / Ruby</span>
+    </div>
+    <div class="tool-card codex">
+      <div class="tool-name">Codex CLI</div>
+      <div class="tool-tag">Long-running Jobs • Sandbox</div>
+      <div class="tool-desc">
+        Periodic <strong>compaction</strong> after each turn — can run for very long sessions. RL-fine-tuned on coding tasks. Excels at debugging complex concurrency & multi-service issues. Sandboxed by default.
+      </div>
+      <span class="strength">Long sessions</span>
+      <span class="strength">Python monorepos</span>
+      <span class="strength">Concurrency bugs</span>
+    </div>
+    <div class="tool-card cursor">
+      <div class="tool-name">Cursor</div>
+      <div class="tool-tag">IDE-first • Semantic Search</div>
+      <div class="tool-desc">
+        Embeds your codebase for <strong>semantic retrieval</strong>. Fast new model. Good bug bot for code review. Great when you want to stay in your IDE and visually inspect code.
+      </div>
+      <span class="strength">IDE workflow</span>
+      <span class="strength">Code review bot</span>
+      <span class="strength">Fast iteration</span>
+    </div>
+    <div class="tool-card stack">
+      <div class="tool-name">Deploy Stack</div>
+      <div class="tool-tag">Minimize Boilerplate</div>
+      <div class="tool-desc">
+        Use <strong>Vercel, Next.js, Cloudflare Workers</strong> — pre-built plumbing means agents deal with ~100-200 lines of focused code instead of service discovery & config hell.
+      </div>
+      <span class="strength">Vercel</span>
+      <span class="strength">Next.js</span>
+      <span class="strength">CF Workers</span>
+    </div>
+  </div>
+
+  <!-- ARCHITECTURE -->
+  <div class="arch-section">
+    <div class="section-label">02 — Under the Hood</div>
+    <div class="section-title">How the Two Architectures Differ</div>
+    <div class="arch-grid">
+      <div class="arch-card">
+        <h3><span class="dot cyan"></span> Claude Code</h3>
+        <div class="flow">
+          <span class="node cyan-bg">User prompt</span>
+          <span class="arrow">→</span>
+          <span class="node cyan-bg">Spawn N sub-agents</span>
+          <span class="arrow">→</span>
+          <span class="node cyan-bg">Each explores via grep/ripgrep</span>
+          <span class="arrow">→</span>
+          <span class="node cyan-bg">Summarize back</span>
+          <span class="arrow">→</span>
+          <span class="node cyan-bg">Act on merged context</span>
+          <br><br>
+          ✦ Each sub-agent gets its own clean context window<br>
+          ✦ Uses grep (not embeddings) — works great because code is context-dense<br>
+          ✦ Respects .gitignore automatically
+        </div>
+      </div>
+      <div class="arch-card">
+        <h3><span class="dot green"></span> Codex CLI</h3>
+        <div class="flow">
+          <span class="node green-bg">User prompt</span>
+          <span class="arrow">→</span>
+          <span class="node green-bg">Execute in sandbox</span>
+          <span class="arrow">→</span>
+          <span class="node green-bg">Compact after each turn</span>
+          <span class="arrow">→</span>
+          <span class="node green-bg">Continue indefinitely</span>
+          <span class="arrow">→</span>
+          <span class="node green-bg">Token % moves up/down</span>
+          <br><br>
+          ✦ Designed for long-running 24-48hr jobs<br>
+          ✦ RL-trained: emits complex grep expressions, writes scripts to modify filesystem<br>
+          ✦ "AlphaGo-like" alien but effective behavior
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTEXT WARNING -->
+  <div class="warning-banner">
+    <div class="warning-icon">⚠️</div>
+    <div>
+      <h3>The "Dumb Zone" — Context Poisoning is Real</h3>
+      <p>
+        After <span class="mono">~50% token usage</span>, model quality degrades sharply. Calvin clears context aggressively at this threshold.
+        <br><br>
+        <strong>🐤 The Canary Trick:</strong> Plant a random fact at the start of your session — <em>"My name is Calvin. I drank tea at 8am."</em> Periodically quiz the model. When it forgets, your context is poisoned — time to clear and restart.
+      </p>
+    </div>
+  </div>
+
+  <!-- 10 TIPS -->
+  <div class="tips-section">
+    <div class="section-label">03 — The Playbook</div>
+    <div class="section-title">10 Tips to Become a Top 1% User</div>
+    <div class="tips-grid">
+      <div class="tip-card">
+        <div class="tip-num">01</div>
+        <div class="tip-content">
+          <h3>Tests First, Always</h3>
+          <p>Gary ran 3 days without tests, then hit <span class="highlight">100% coverage in 1 day</span> and "sped up like crazy." Agent output quality jumps dramatically when it can verify its own work. Tests = evals.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">02</div>
+        <div class="tip-content">
+          <h3>Clear Context at 50%</h3>
+          <p>Don't let the agent spiral. When token usage crosses <span class="highlight">~50%</span>, reset. The model in a poisoned context is like a student with 5 minutes left on an exam — it panics.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">03</div>
+        <div class="tip-content">
+          <h3>Keep Codebases Small</h3>
+          <p>Target <span class="highlight">100–200 lines</span> per focused package. Use microservices. Less plumbing = better agent performance. Let Vercel/Next.js handle boilerplate.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">04</div>
+        <div class="tip-content">
+          <h3>Let Agents Check Their Work</h3>
+          <p>Lint, CI, test suites — the more <span class="highlight">automated verification loops</span> you give agents, the better their output. Code review bots (Reptil, Cursor, Codex) on every PR.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">05</div>
+        <div class="tip-content">
+          <h3>Think Like a Manager</h3>
+          <p>Top users <span class="highlight">direct flows</span>, kick off parallel tasks, review results, and context-switch. You're the architect; agents are your build crew.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">06</div>
+        <div class="tip-content">
+          <h3>Use the 10-Minute Pockets</h3>
+          <p>No more 4-hour blocks needed. <span class="highlight">Kick off a task between meetings</span>, let it run, review later. The maker-vs-manager divide is dissolving.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">07</div>
+        <div class="tip-content">
+          <h3>Give It Real Environment Access</h3>
+          <p>CLI agents can access your <span class="highlight">dev DB, production DB, job queues</span>. Gary debugged nested delayed jobs 5 levels deep — agent found the bug and wrote a test.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">08</div>
+        <div class="tip-content">
+          <h3>Run Code Review Aggressively</h3>
+          <p>Use <span class="highlight">multiple review bots</span>: Reptil for correctness, Cursor bug bot for speed, Codex for deep review. Don't merge without automated review.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">09</div>
+        <div class="tip-content">
+          <h3>Prototype → Production Pipeline</h3>
+          <p>Write <span class="highlight">quick in-memory prototypes</span>, then tell the agent to make it production-ready. Great for validating ideas fast before investing architecture time.</p>
+        </div>
+      </div>
+      <div class="tip-card">
+        <div class="tip-num">10</div>
+        <div class="tip-content">
+          <h3>Keep Tinkering — It Changes Monthly</h3>
+          <p>Calvin switches tools <span class="highlight">every few months</span>. The landscape moves fast. The people who benefit most are those constantly pushing the boundary of what's possible.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUPERPOWERS / WEAKNESSES -->
+  <div class="sw-section">
+    <div class="section-label">04 — Know Your Agent</div>
+    <div class="section-title">Superpowers vs. Pitfalls</div>
+    <div class="sw-grid">
+      <div class="sw-card super">
+        <h3>✦ Agent Superpowers</h3>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Relentless persistence</strong> — they never stop trying</span></div>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Codebase exploration</strong> — grep through thousands of files in seconds</span></div>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Complex grep expressions</strong> — emit patterns that would "torture a human"</span></div>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Deep debugging</strong> — trace issues across nested job queues & services</span></div>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Rapid prototyping</strong> — full working demo in minutes</span></div>
+        <div class="sw-item"><span class="icon">⚡</span> <span><strong>Concurrency handling</strong> — decent at spotting race conditions</span></div>
+      </div>
+      <div class="sw-card weak">
+        <h3>⚑ Watch Out For</h3>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Code duplication</strong> — they "make more of whatever's there" instead of reusing</span></div>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Context poisoning</strong> — goes down wrong path and doubles down on it</span></div>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Architecture smell</strong> — still can't judge optimal system design</span></div>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Prompt injection</strong> — vulnerable when exposed to untrusted input (GitHub issues, web)</span></div>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Training data bias</strong> — works best on whatever resembles its training set</span></div>
+        <div class="sw-item"><span class="icon">🚩</span> <span><strong>Long-context decay</strong> — quality drops past 50% token window</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUOTE -->
+  <div class="quote-card">
+    "I feel like I can do five people's worth of work in a single day. It's like rocket boosters. It's unbelievable."
+    <div class="attr">— Gary Tan, YC President, on Claude Code</div>
+  </div>
+
+  <!-- MINDSET -->
+  <div class="section-label">05 — The New Mindset</div>
+  <div class="section-title">Who Benefits Most</div>
+  <div class="mindset-row">
+    <div class="mindset-card">
+      <div class="emoji">🎯</div>
+      <h4>Senior Engineers</h4>
+      <p>Can spot bad architecture, direct agents precisely, and turn quick ideas into shipped code with a few words.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="emoji">🧠</div>
+      <h4>Manager-Brained Builders</h4>
+      <p>Excel at juggling 10 parallel tasks, reviewing outputs, and context-switching between branches.</p>
+    </div>
+    <div class="mindset-card">
+      <div class="emoji">🎨</div>
+      <h4>Designer-Artists</h4>
+      <p>Have taste for what belongs in the product. Can direct what stays and what goes — the "what" over the "how."</p>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    Source: YC Light Cone — Calvin French-Owen × Gary Tan • youtube.com/watch?v=qwmmWzPnhog • 2025
+  </div>
+
+</div>
+</body>
+</html>
