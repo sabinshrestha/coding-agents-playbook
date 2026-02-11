@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pick the Right Tool for the Job — Coding Agent Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-brand"><span class="ndot"></span> Coding Agent Playbook</a>
+  <ul class="nav-links">
+    <li><a href="../">All Articles</a></li>
+    <li><a href="tool-comparison.html">Compare</a></li>
+    <li><a href="10-tips.html">10 Tips</a></li>
+    <li><a href="superpowers.html">Strengths</a></li>
+  </ul>
+</nav>
+
+<div class="article-page">
+  <a href="../" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    All Articles
+  </a>
+
+  <div class="page-label">01 — Your Arsenal</div>
+  <h1 class="page-title">Pick the Right Tool for the Job</h1>
+  <p class="page-intro">Calvin switches tools every few months as the landscape evolves. Here's what each does best right now, and when to reach for which one.</p>
+
+  <div class="article-section">
+    <div class="tools-grid">
+      <div class="tool-card claude">
+        <div class="tool-name">Claude Code</div>
+        <div class="tool-tag">Daily Driver • CLI</div>
+        <div class="tool-desc">Splits tasks across <strong>sub-agent context windows</strong> (Haiku scouts the file system). Best-in-class at context engineering. Feels like "flying through the code." Access your dev DB, prod DB, and full local env.</div>
+        <span class="strength">Context splitting</span><span class="strength">Frontend</span><span class="strength">Rails / Ruby</span>
+      </div>
+      <div class="tool-card codex">
+        <div class="tool-name">Codex CLI</div>
+        <div class="tool-tag">Long-Running Jobs • Sandbox</div>
+        <div class="tool-desc">Periodic <strong>compaction</strong> after each turn — can run for very long sessions. RL-fine-tuned on coding tasks. Excels at debugging complex concurrency & multi-service issues.</div>
+        <span class="strength">Long sessions</span><span class="strength">Python monorepos</span><span class="strength">Concurrency bugs</span>
+      </div>
+      <div class="tool-card cursor">
+        <div class="tool-name">Cursor</div>
+        <div class="tool-tag">IDE-First • Semantic Search</div>
+        <div class="tool-desc">Embeds your codebase for <strong>semantic retrieval</strong>. Fast new model. Good bug bot for code review. Great when you want to stay in your IDE and visually inspect code.</div>
+        <span class="strength">IDE workflow</span><span class="strength">Code review bot</span><span class="strength">Fast iteration</span>
+      </div>
+      <div class="tool-card stack">
+        <div class="tool-name">Deploy Stack</div>
+        <div class="tool-tag">Minimize Boilerplate</div>
+        <div class="tool-desc">Use <strong>Vercel, Next.js, Cloudflare Workers</strong> — pre-built plumbing means agents deal with ~100–200 lines of focused code instead of service discovery & config hell.</div>
+        <span class="strength">Vercel</span><span class="strength">Next.js</span><span class="strength">CF Workers</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <div></div>
+    <a href="tool-comparison.html" class="next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">Tool Comparison Matrix</span>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <span>Source: YC Light Cone — Calvin French-Owen × Gary Tan — 2025</span>
+  <a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch on YouTube →</a>
+</footer>
+</body>
+</html>

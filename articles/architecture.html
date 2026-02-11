@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How the Architectures Differ — Coding Agent Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-brand"><span class="ndot"></span> Coding Agent Playbook</a>
+  <ul class="nav-links">
+    <li><a href="../">All Articles</a></li>
+    <li><a href="tool-comparison.html">Compare</a></li>
+    <li><a href="10-tips.html">10 Tips</a></li>
+    <li><a href="superpowers.html">Strengths</a></li>
+  </ul>
+</nav>
+
+<div class="article-page">
+  <a href="../" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    All Articles
+  </a>
+
+  <div class="page-label">03 — Under the Hood</div>
+  <h1 class="page-title">How the Two Architectures Differ</h1>
+  <p class="page-intro">Claude Code and Codex take fundamentally different approaches to managing context and long-running work. Understanding this helps you pick the right tool for the task.</p>
+
+  <div class="article-section">
+    <div class="arch-grid">
+      <div class="arch-card">
+        <h3><span class="dot cyan"></span> Claude Code</h3>
+        <div class="flow">
+          <span class="node cyan-bg">User prompt</span> →
+          <span class="node cyan-bg">Spawn N sub-agents</span> →
+          <span class="node cyan-bg">Explore via grep</span> →
+          <span class="node cyan-bg">Summarize back</span> →
+          <span class="node cyan-bg">Act on merged context</span>
+        </div>
+        <div class="detail">
+          <span>✦</span> Each sub-agent gets its own clean context window<br>
+          <span>✦</span> Uses grep (not embeddings) — works great because code is context-dense<br>
+          <span>✦</span> Respects .gitignore automatically
+        </div>
+      </div>
+      <div class="arch-card">
+        <h3><span class="dot green"></span> Codex CLI</h3>
+        <div class="flow">
+          <span class="node green-bg">User prompt</span> →
+          <span class="node green-bg">Execute in sandbox</span> →
+          <span class="node green-bg">Compact after each turn</span> →
+          <span class="node green-bg">Continue indefinitely</span> →
+          <span class="node green-bg">Token % moves up/down</span>
+        </div>
+        <div class="detail">
+          <span>✦</span> Designed for long-running 24–48hr jobs<br>
+          <span>✦</span> RL-trained: emits complex grep expressions, writes scripts to modify filesystem<br>
+          <span>✦</span> "AlphaGo-like" alien but effective behavior
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <a href="tool-comparison.html">
+      <span class="nav-label">← Previous</span>
+      <span class="nav-title">Tool Comparison Matrix</span>
+    </a>
+    <a href="context-poisoning.html" class="next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">Context Poisoning</span>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <span>Source: YC Light Cone — Calvin French-Owen × Gary Tan — 2025</span>
+  <a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch on YouTube →</a>
+</footer>
+</body>
+</html>

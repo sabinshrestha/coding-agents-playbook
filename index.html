@@ -4,546 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Top 1% Coding Agent Productivity Playbook</title>
-<meta name="description" content="Context engineering, the dumb zone, and 10 actionable tips from the builders who ship fastest. From YC's Light Cone.">
+<meta name="description" content="Context engineering, the dumb zone, and 10 actionable tips from the builders who ship fastest.">
 <meta property="og:title" content="Top 1% Coding Agent Productivity Playbook">
 <meta property="og:description" content="Context engineering, the dumb zone, and 10 actionable tips from the builders who ship fastest.">
-<meta property="og:type" content="article">
-<meta name="twitter:card" content="summary_large_image">
-<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --bg: #0a0a0f;
-    --surface: #12121a;
-    --surface-2: #1a1a26;
-    --surface-3: #222232;
-    --border: #2a2a3a;
-    --border-light: #3a3a4a;
-    --accent-cyan: #00e5ff;
-    --accent-purple: #a855f7;
-    --accent-orange: #ff6b35;
-    --accent-green: #22c55e;
-    --accent-yellow: #facc15;
-    --accent-pink: #f472b6;
-    --text: #c8c8d8;
-    --text-dim: #787890;
-    --text-bright: #f0f0f8;
-    --text-body: #a8a8be;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'DM Sans', sans-serif;
-    line-height: 1.7;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  /* READING PROGRESS BAR */
-  .progress-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple));
-    z-index: 1000;
-    transition: width 0.1s linear;
-    width: 0%;
-  }
-
-  /* NAVIGATION */
-  .nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    background: rgba(10, 10, 15, 0.85);
-    backdrop-filter: blur(20px);
-    border-bottom: 1px solid rgba(42, 42, 58, 0.5);
-    padding: 0 32px;
-    height: 56px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transform: translateY(-100%);
-    transition: transform 0.3s ease;
-  }
-  .nav.visible { transform: translateY(0); }
-
-  .nav-brand {
-    font-family: 'Outfit', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: var(--text-bright);
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  .nav-brand .ndot {
-    width: 8px; height: 8px;
-    border-radius: 50%;
-    background: var(--accent-cyan);
-    box-shadow: 0 0 8px var(--accent-cyan);
-  }
-
-  .nav-links { display: flex; gap: 24px; list-style: none; }
-  .nav-links a {
-    font-size: 13px;
-    color: var(--text-dim);
-    text-decoration: none;
-    font-weight: 500;
-    transition: color 0.2s;
-  }
-  .nav-links a:hover { color: var(--accent-cyan); }
-  @media (max-width: 768px) { .nav-links { display: none; } }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 80px 24px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 30%, transparent 100%);
-  }
-
-  .hero-glow-1 {
-    position: absolute;
-    width: 600px; height: 600px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(0,229,255,0.08) 0%, transparent 70%);
-    top: -100px; right: -150px;
-    filter: blur(80px);
-    animation: float 8s ease-in-out infinite;
-  }
-
-  .hero-glow-2 {
-    position: absolute;
-    width: 500px; height: 500px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(168,85,247,0.06) 0%, transparent 70%);
-    bottom: -100px; left: -100px;
-    filter: blur(80px);
-    animation: float 10s ease-in-out infinite reverse;
-  }
-
-  @keyframes float {
-    0%, 100% { transform: translate(0, 0); }
-    50% { transform: translate(20px, -20px); }
-  }
-
-  .hero-content { position: relative; z-index: 2; max-width: 800px; }
-
-  .hero .badge {
-    display: inline-block;
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent-cyan);
-    border: 1px solid rgba(0,229,255,0.3);
-    padding: 8px 24px;
-    border-radius: 24px;
-    margin-bottom: 28px;
-    animation: fadeUp 0.6s ease both;
-  }
-
-  .hero h1 {
-    font-family: 'Outfit', sans-serif;
-    font-size: clamp(36px, 6vw, 64px);
-    font-weight: 900;
-    line-height: 1.08;
-    letter-spacing: -2px;
-    background: linear-gradient(135deg, #fff 0%, var(--accent-cyan) 50%, var(--accent-purple) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    margin-bottom: 20px;
-    animation: fadeUp 0.6s ease 0.1s both;
-  }
-
-  .hero .subtitle {
-    font-size: 17px;
-    color: var(--text-dim);
-    margin-bottom: 12px;
-    font-weight: 500;
-    animation: fadeUp 0.6s ease 0.2s both;
-  }
-
-  .hero .meta {
-    font-family: 'Space Mono', monospace;
-    font-size: 12px;
-    color: var(--text-dim);
-    opacity: 0.6;
-    margin-bottom: 36px;
-    animation: fadeUp 0.6s ease 0.3s both;
-  }
-  .hero .meta a { color: var(--accent-cyan); text-decoration: none; }
-  .hero .meta a:hover { text-decoration: underline; }
-
-  .scroll-cue {
-    animation: fadeUp 0.6s ease 0.5s both;
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    color: var(--text-dim);
-    font-size: 12px;
-    font-family: 'Space Mono', monospace;
-    cursor: pointer;
-    text-decoration: none;
-  }
-
-  .scroll-cue .arrow {
-    width: 18px; height: 18px;
-    border-right: 2px solid var(--accent-cyan);
-    border-bottom: 2px solid var(--accent-cyan);
-    transform: rotate(45deg);
-    animation: bounce 2s ease infinite;
-  }
-
-  @keyframes bounce {
-    0%, 100% { transform: rotate(45deg) translate(0,0); }
-    50% { transform: rotate(45deg) translate(4px, 4px); }
-  }
-
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* LAYOUT */
-  .blog-layout {
-    max-width: 1400px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 220px 1fr;
-    gap: 48px;
-    padding: 0 32px 80px;
-  }
-
-  @media (max-width: 1024px) {
-    .blog-layout { grid-template-columns: 1fr; padding: 0 20px 60px; }
-  }
-
-  /* SIDEBAR */
-  .sidebar {
-    position: sticky;
-    top: 80px;
-    height: fit-content;
-    max-height: calc(100vh - 100px);
-    overflow-y: auto;
-  }
-  @media (max-width: 1024px) { .sidebar { display: none; } }
-
-  .toc-title {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--text-dim);
-    margin-bottom: 16px;
-  }
-
-  .toc-list { list-style: none; border-left: 1px solid var(--border); }
-
-  .toc-list a {
-    display: block;
-    padding: 8px 0 8px 20px;
-    font-size: 13px;
-    color: var(--text-dim);
-    text-decoration: none;
-    transition: all 0.2s;
-    border-left: 2px solid transparent;
-    margin-left: -1px;
-  }
-
-  .toc-list a:hover,
-  .toc-list a.active {
-    color: var(--accent-cyan);
-    border-left-color: var(--accent-cyan);
-  }
-
-  /* ARTICLE */
-  .article { max-width: 820px; }
-
-  .section { margin-bottom: 72px; }
-
-  .section-label {
-    font-family: 'Space Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--accent-cyan);
-    margin-bottom: 12px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  .section-title {
-    font-family: 'Outfit', sans-serif;
-    font-size: 32px;
-    font-weight: 800;
-    margin-bottom: 16px;
-    color: var(--text-bright);
-    letter-spacing: -0.5px;
-  }
-
-  .section-intro {
-    font-size: 16px;
-    color: var(--text-body);
-    line-height: 1.8;
-    margin-bottom: 28px;
-  }
-
-  /* TOOL CARDS */
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 16px;
-  }
-
-  .tool-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.25s, border-color 0.3s;
-  }
-  .tool-card:hover { transform: translateY(-3px); }
-  .tool-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-
-  .tool-card.claude::before { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-purple)); }
-  .tool-card.claude:hover { border-color: rgba(0,229,255,0.3); }
-  .tool-card.codex::before { background: linear-gradient(90deg, var(--accent-green), var(--accent-yellow)); }
-  .tool-card.codex:hover { border-color: rgba(34,197,94,0.3); }
-  .tool-card.cursor::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-pink)); }
-  .tool-card.cursor:hover { border-color: rgba(255,107,53,0.3); }
-  .tool-card.stack::before { background: linear-gradient(90deg, var(--accent-yellow), var(--accent-orange)); }
-  .tool-card.stack:hover { border-color: rgba(250,204,21,0.3); }
-
-  .tool-name { font-family: 'Outfit', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-  .tool-card.claude .tool-name { color: var(--accent-cyan); }
-  .tool-card.codex .tool-name { color: var(--accent-green); }
-  .tool-card.cursor .tool-name { color: var(--accent-orange); }
-  .tool-card.stack .tool-name { color: var(--accent-yellow); }
-
-  .tool-tag { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--text-dim); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px; }
-  .tool-desc { font-size: 14px; line-height: 1.7; color: var(--text-body); }
-
-  .strength { display: inline-block; font-size: 11px; padding: 4px 12px; border-radius: 10px; margin-top: 12px; margin-right: 4px; font-weight: 600; }
-  .tool-card.claude .strength { background: rgba(0,229,255,0.08); color: var(--accent-cyan); }
-  .tool-card.codex .strength { background: rgba(34,197,94,0.08); color: var(--accent-green); }
-  .tool-card.cursor .strength { background: rgba(255,107,53,0.08); color: var(--accent-orange); }
-  .tool-card.stack .strength { background: rgba(250,204,21,0.08); color: var(--accent-yellow); }
-
-  /* ARCHITECTURE */
-  .arch-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 700px) { .arch-grid { grid-template-columns: 1fr; } }
-
-  .arch-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-  }
-  .arch-card h3 {
-    font-family: 'Outfit', sans-serif;
-    font-size: 18px; font-weight: 700;
-    margin-bottom: 16px;
-    display: flex; align-items: center; gap: 10px;
-    color: var(--text-bright);
-  }
-  .dot { width: 10px; height: 10px; border-radius: 50%; display: inline-block; }
-  .dot.cyan { background: var(--accent-cyan); box-shadow: 0 0 8px var(--accent-cyan); }
-  .dot.green { background: var(--accent-green); box-shadow: 0 0 8px var(--accent-green); }
-
-  .flow { font-family: 'Space Mono', monospace; font-size: 11.5px; line-height: 2.2; color: var(--text); }
-  .node { display: inline-block; padding: 3px 10px; border-radius: 6px; font-size: 11px; }
-  .node.cyan-bg { background: rgba(0,229,255,0.1); color: var(--accent-cyan); }
-  .node.green-bg { background: rgba(34,197,94,0.1); color: var(--accent-green); }
-
-  .detail { margin-top: 16px; font-size: 13px; color: var(--text-body); line-height: 1.9; }
-  .detail span { color: var(--accent-cyan); font-weight: 600; }
-  .arch-card:last-child .detail span { color: var(--accent-green); }
-
-  /* WARNING */
-  .warning-banner {
-    background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(250,204,21,0.04));
-    border: 1px solid rgba(255,107,53,0.2);
-    border-radius: 16px;
-    padding: 28px 32px;
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-  }
-  .warning-icon { font-size: 28px; flex-shrink: 0; }
-  .warning-banner h3 { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; color: var(--accent-orange); margin-bottom: 10px; }
-  .warning-banner p { font-size: 14px; line-height: 1.75; color: var(--text-body); }
-  .mono { font-family: 'Space Mono', monospace; background: rgba(255,107,53,0.1); padding: 2px 10px; border-radius: 4px; font-size: 12px; color: var(--accent-orange); }
-
-  .canary { margin-top: 14px; padding: 16px 20px; background: rgba(250,204,21,0.05); border: 1px solid rgba(250,204,21,0.15); border-radius: 10px; font-size: 13px; line-height: 1.7; }
-  .canary strong { color: var(--accent-yellow); }
-  .canary em { color: var(--text); }
-
-  /* TIPS */
-  .tips-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 16px; }
-  @media (max-width: 700px) { .tips-grid { grid-template-columns: 1fr; } }
-
-  .tip-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 24px;
-    display: flex;
-    gap: 18px;
-    align-items: flex-start;
-    transition: transform 0.2s, border-color 0.3s;
-  }
-  .tip-card:hover { transform: translateY(-2px); border-color: var(--border-light); }
-
-  .tip-num {
-    font-family: 'Outfit', sans-serif;
-    font-size: 34px; font-weight: 900; line-height: 1; min-width: 42px;
-    background: linear-gradient(180deg, var(--accent-cyan), var(--accent-purple));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-  }
-
-  .tip-content h3 { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 700; color: var(--text-bright); margin-bottom: 8px; }
-  .tip-content p { font-size: 13.5px; line-height: 1.7; color: var(--text-body); }
-  .hl { color: var(--accent-cyan); font-weight: 600; }
-
-  /* SUPERPOWERS */
-  .sw-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-  @media (max-width: 700px) { .sw-grid { grid-template-columns: 1fr; } }
-
-  .sw-card { border-radius: 16px; padding: 28px; border: 1px solid var(--border); }
-  .sw-card.super { background: linear-gradient(135deg, rgba(34,197,94,0.04), rgba(0,229,255,0.04)); border-color: rgba(34,197,94,0.15); }
-  .sw-card.weak { background: linear-gradient(135deg, rgba(255,107,53,0.04), rgba(244,114,182,0.04)); border-color: rgba(255,107,53,0.15); }
-  .sw-card h3 { font-family: 'Outfit', sans-serif; font-size: 18px; font-weight: 700; margin-bottom: 16px; }
-  .sw-card.super h3 { color: var(--accent-green); }
-  .sw-card.weak h3 { color: var(--accent-orange); }
-
-  .sw-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; font-size: 13.5px; line-height: 1.6; color: var(--text-body); }
-  .sw-item .icon { flex-shrink: 0; font-size: 14px; margin-top: 2px; }
-  .sw-item strong { color: var(--text); }
-
-  /* QUOTE */
-  .quote-card {
-    background: var(--surface);
-    border-left: 3px solid var(--accent-purple);
-    border-radius: 0 16px 16px 0;
-    padding: 32px 36px;
-    position: relative;
-  }
-  .quote-mark { font-size: 60px; line-height: 1; color: var(--accent-purple); opacity: 0.3; position: absolute; top: 16px; left: 20px; font-family: Georgia, serif; }
-  .quote-card blockquote { font-size: 18px; line-height: 1.7; color: var(--text); font-style: italic; padding-left: 8px; }
-  .quote-card .attr { font-style: normal; font-size: 13px; color: var(--text-dim); margin-top: 14px; font-family: 'Space Mono', monospace; padding-left: 8px; }
-
-  /* MINDSET */
-  .mindset-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  @media (max-width: 800px) { .mindset-grid { grid-template-columns: 1fr; } }
-
-  .mindset-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 28px;
-    text-align: center;
-    transition: transform 0.25s, border-color 0.3s;
-  }
-  .mindset-card:hover { transform: translateY(-3px); border-color: var(--border-light); }
-  .mindset-card .emoji { font-size: 36px; margin-bottom: 14px; }
-  .mindset-card h4 { font-family: 'Outfit', sans-serif; font-size: 17px; font-weight: 700; color: var(--text-bright); margin-bottom: 8px; }
-  .mindset-card p { font-size: 13.5px; color: var(--text-body); line-height: 1.65; }
-
-  /* VIDEO */
-  .video-wrapper {
-    position: relative;
-    padding-bottom: 56.25%;
-    height: 0;
-    border-radius: 16px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-  }
-  .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
-
-  /* FOOTER */
-  .footer {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 32px;
-    border-top: 1px solid var(--border);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-family: 'Space Mono', monospace;
-    font-size: 11px;
-    color: var(--text-dim);
-  }
-  .footer a { color: var(--accent-cyan); text-decoration: none; }
-  .footer a:hover { text-decoration: underline; }
-  @media (max-width: 600px) { .footer { flex-direction: column; gap: 8px; text-align: center; } }
-
-  /* BACK TO TOP */
-  .back-to-top {
-    position: fixed;
-    bottom: 32px; right: 32px;
-    width: 44px; height: 44px;
-    border-radius: 50%;
-    background: var(--surface-2);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s;
-    z-index: 99;
-    text-decoration: none;
-  }
-  .back-to-top.visible { opacity: 1; transform: translateY(0); }
-  .back-to-top:hover { background: var(--surface-3); border-color: var(--accent-cyan); }
-  .back-to-top svg { width: 18px; height: 18px; stroke: var(--accent-cyan); }
-
-  ::selection { background: rgba(0,229,255,0.2); color: var(--text-bright); }
-</style>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-
-<div class="progress-bar" id="progressBar"></div>
-
-<nav class="nav" id="nav">
-  <div class="nav-brand"><span class="ndot"></span> Coding Agent Playbook</div>
-  <ul class="nav-links">
-    <li><a href="#tools">Tools</a></li>
-    <li><a href="#architecture">Architecture</a></li>
-    <li><a href="#context">Context</a></li>
-    <li><a href="#tips">10 Tips</a></li>
-    <li><a href="#strengths">Strengths</a></li>
-    <li><a href="#mindset">Mindset</a></li>
-  </ul>
-</nav>
 
 <section class="hero" id="top">
   <div class="hero-glow-1"></div>
@@ -553,189 +20,67 @@
     <h1>Top 1% Coding Agent<br>Productivity Playbook</h1>
     <p class="subtitle">Context engineering, the dumb zone, and 10 actionable tips<br>from the builders who ship fastest</p>
     <p class="meta">From YC's Light Cone — Calvin French-Owen (Segment, ex-OpenAI Codex) × Gary Tan<br><a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch the full episode →</a></p>
-    <a href="#tools" class="scroll-cue">
-      scroll to read
+    <a href="#articles" class="scroll-cue">
+      scroll to explore
       <div class="arrow"></div>
     </a>
   </div>
 </section>
 
-<div class="blog-layout">
-  <aside class="sidebar">
-    <div class="toc-title">Contents</div>
-    <ul class="toc-list">
-      <li><a href="#tools">01 — Your Arsenal</a></li>
-      <li><a href="#architecture">02 — Architecture</a></li>
-      <li><a href="#context">03 — Context Warning</a></li>
-      <li><a href="#tips">04 — 10 Tips</a></li>
-      <li><a href="#strengths">05 — Superpowers</a></li>
-      <li><a href="#quote">06 — Quote</a></li>
-      <li><a href="#mindset">07 — Who Benefits</a></li>
-      <li><a href="#video">08 — Watch</a></li>
-    </ul>
-  </aside>
+<div class="articles-hub" id="articles">
+  <div class="hub-title">All Articles</div>
+  <div class="hub-grid">
 
-  <main class="article">
+    <a href="articles/your-arsenal.html" class="hub-card c-cyan">
+      <div class="card-num">01 — Your Arsenal</div>
+      <div class="card-title">Pick the Right Tool for the Job</div>
+      <div class="card-desc">Claude Code, Codex CLI, Cursor, and deploy stacks — what each does best and when to reach for which one.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="tools">
-      <div class="section-label">01 — Your Arsenal</div>
-      <h2 class="section-title">Pick the Right Tool for the Job</h2>
-      <p class="section-intro">Calvin switches tools every few months as the landscape evolves. Here's what each does best right now, and when to reach for which one.</p>
-      <div class="tools-grid">
-        <div class="tool-card claude">
-          <div class="tool-name">Claude Code</div>
-          <div class="tool-tag">Daily Driver • CLI</div>
-          <div class="tool-desc">Splits tasks across <strong>sub-agent context windows</strong> (Haiku scouts the file system). Best-in-class at context engineering. Feels like "flying through the code." Access your dev DB, prod DB, and full local env.</div>
-          <span class="strength">Context splitting</span><span class="strength">Frontend</span><span class="strength">Rails / Ruby</span>
-        </div>
-        <div class="tool-card codex">
-          <div class="tool-name">Codex CLI</div>
-          <div class="tool-tag">Long-Running Jobs • Sandbox</div>
-          <div class="tool-desc">Periodic <strong>compaction</strong> after each turn — can run for very long sessions. RL-fine-tuned on coding tasks. Excels at debugging complex concurrency & multi-service issues.</div>
-          <span class="strength">Long sessions</span><span class="strength">Python monorepos</span><span class="strength">Concurrency bugs</span>
-        </div>
-        <div class="tool-card cursor">
-          <div class="tool-name">Cursor</div>
-          <div class="tool-tag">IDE-First • Semantic Search</div>
-          <div class="tool-desc">Embeds your codebase for <strong>semantic retrieval</strong>. Fast new model. Good bug bot for code review. Great when you want to stay in your IDE and visually inspect code.</div>
-          <span class="strength">IDE workflow</span><span class="strength">Code review bot</span><span class="strength">Fast iteration</span>
-        </div>
-        <div class="tool-card stack">
-          <div class="tool-name">Deploy Stack</div>
-          <div class="tool-tag">Minimize Boilerplate</div>
-          <div class="tool-desc">Use <strong>Vercel, Next.js, Cloudflare Workers</strong> — pre-built plumbing means agents deal with ~100–200 lines of focused code instead of service discovery & config hell.</div>
-          <span class="strength">Vercel</span><span class="strength">Next.js</span><span class="strength">CF Workers</span>
-        </div>
-      </div>
-    </div>
+    <a href="articles/tool-comparison.html" class="hub-card c-green">
+      <div class="card-num">02 — Head to Head</div>
+      <div class="card-title">Tool Comparison Matrix</div>
+      <div class="card-desc">Side-by-side breakdown of context strategy, search method, env access, strengths, and weaknesses.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="architecture">
-      <div class="section-label">02 — Under the Hood</div>
-      <h2 class="section-title">How the Two Architectures Differ</h2>
-      <p class="section-intro">Claude Code and Codex take fundamentally different approaches to managing context and long-running work. Understanding this helps you pick the right tool for the task.</p>
-      <div class="arch-grid">
-        <div class="arch-card">
-          <h3><span class="dot cyan"></span> Claude Code</h3>
-          <div class="flow">
-            <span class="node cyan-bg">User prompt</span> →
-            <span class="node cyan-bg">Spawn N sub-agents</span> →
-            <span class="node cyan-bg">Explore via grep</span> →
-            <span class="node cyan-bg">Summarize back</span> →
-            <span class="node cyan-bg">Act on merged context</span>
-          </div>
-          <div class="detail">
-            <span>✦</span> Each sub-agent gets its own clean context window<br>
-            <span>✦</span> Uses grep (not embeddings) — works great because code is context-dense<br>
-            <span>✦</span> Respects .gitignore automatically
-          </div>
-        </div>
-        <div class="arch-card">
-          <h3><span class="dot green"></span> Codex CLI</h3>
-          <div class="flow">
-            <span class="node green-bg">User prompt</span> →
-            <span class="node green-bg">Execute in sandbox</span> →
-            <span class="node green-bg">Compact after each turn</span> →
-            <span class="node green-bg">Continue indefinitely</span> →
-            <span class="node green-bg">Token % moves up/down</span>
-          </div>
-          <div class="detail">
-            <span>✦</span> Designed for long-running 24–48hr jobs<br>
-            <span>✦</span> RL-trained: emits complex grep expressions, writes scripts to modify filesystem<br>
-            <span>✦</span> "AlphaGo-like" alien but effective behavior
-          </div>
-        </div>
-      </div>
-    </div>
+    <a href="articles/architecture.html" class="hub-card c-purple">
+      <div class="card-num">03 — Under the Hood</div>
+      <div class="card-title">How the Architectures Differ</div>
+      <div class="card-desc">Claude Code's sub-agent splitting vs Codex CLI's periodic compaction — fundamentally different approaches.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="context">
-      <div class="section-label">03 — Critical Warning</div>
-      <h2 class="section-title">The "Dumb Zone" — Context Poisoning</h2>
-      <div class="warning-banner">
-        <div class="warning-icon">⚠️</div>
-        <div>
-          <h3>Quality Degrades After ~50% Token Usage</h3>
-          <p>Calvin actively clears context whenever token usage crosses <span class="mono">~50%</span>. The model in a poisoned context is like a student with 5 minutes left on an exam — it panics and output quality drops sharply.</p>
-          <div class="canary">
-            <strong>🐤 The Canary Trick</strong><br>
-            Plant a random fact at the start of your session — <em>"My name is Calvin. I drank tea at 8am."</em><br>
-            Periodically quiz the model. When it forgets → your context is poisoned → time to clear and restart.
-          </div>
-        </div>
-      </div>
-    </div>
+    <a href="articles/context-poisoning.html" class="hub-card c-orange">
+      <div class="card-num">04 — Critical Warning</div>
+      <div class="card-title">The "Dumb Zone" — Context Poisoning</div>
+      <div class="card-desc">Why quality degrades after ~50% tokens, and the canary trick to detect when it's time to clear.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="tips">
-      <div class="section-label">04 — The Playbook</div>
-      <h2 class="section-title">10 Tips to Become a Top 1% User</h2>
-      <p class="section-intro">These are the patterns that separate casual users from the people shipping 5x more work per day.</p>
-      <div class="tips-grid">
-        <div class="tip-card"><div class="tip-num">01</div><div class="tip-content"><h3>Tests First, Always</h3><p>Gary ran 3 days without tests, then hit <span class="hl">100% coverage in 1 day</span> and "sped up like crazy." Agent output quality jumps dramatically when it can verify its own work.</p></div></div>
-        <div class="tip-card"><div class="tip-num">02</div><div class="tip-content"><h3>Clear Context at 50%</h3><p>Don't let the agent spiral. When token usage crosses <span class="hl">~50%</span>, reset. A poisoned context window produces increasingly worse output.</p></div></div>
-        <div class="tip-card"><div class="tip-num">03</div><div class="tip-content"><h3>Keep Codebases Small</h3><p>Target <span class="hl">100–200 lines</span> per focused package. Use microservices. Less plumbing = better agent performance.</p></div></div>
-        <div class="tip-card"><div class="tip-num">04</div><div class="tip-content"><h3>Let Agents Check Their Work</h3><p>Lint, CI, test suites — the more <span class="hl">automated verification loops</span> you give agents, the better their output. Code review bots on every PR.</p></div></div>
-        <div class="tip-card"><div class="tip-num">05</div><div class="tip-content"><h3>Think Like a Manager</h3><p>Top users <span class="hl">direct flows</span>, kick off parallel tasks, review results, and context-switch. You're the architect; agents are your build crew.</p></div></div>
-        <div class="tip-card"><div class="tip-num">06</div><div class="tip-content"><h3>Use the 10-Minute Pockets</h3><p>No more 4-hour blocks needed. <span class="hl">Kick off a task between meetings</span>, let it run, review later. The maker-vs-manager divide is dissolving.</p></div></div>
-        <div class="tip-card"><div class="tip-num">07</div><div class="tip-content"><h3>Give It Real Environment Access</h3><p>CLI agents can access your <span class="hl">dev DB, production DB, job queues</span>. Gary debugged nested delayed jobs 5 levels deep — agent found the bug and wrote a test.</p></div></div>
-        <div class="tip-card"><div class="tip-num">08</div><div class="tip-content"><h3>Run Code Review Aggressively</h3><p>Use <span class="hl">multiple review bots</span>: Reptil for correctness, Cursor bug bot for speed, Codex for deep review.</p></div></div>
-        <div class="tip-card"><div class="tip-num">09</div><div class="tip-content"><h3>Prototype → Production Pipeline</h3><p>Write <span class="hl">quick in-memory prototypes</span>, then tell the agent to make it production-ready. Validate ideas fast.</p></div></div>
-        <div class="tip-card"><div class="tip-num">10</div><div class="tip-content"><h3>Keep Tinkering — It Changes Monthly</h3><p>Calvin switches tools <span class="hl">every few months</span>. The people who benefit most are constantly pushing the boundary.</p></div></div>
-      </div>
-    </div>
+    <a href="articles/10-tips.html" class="hub-card c-cyan">
+      <div class="card-num">05 — The Playbook</div>
+      <div class="card-title">10 Tips to Become a Top 1% User</div>
+      <div class="card-desc">From test-driven development to 10-minute pockets — the patterns that separate casual users from power users.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="strengths">
-      <div class="section-label">05 — Know Your Agent</div>
-      <h2 class="section-title">Superpowers vs. Pitfalls</h2>
-      <p class="section-intro">Understanding what agents excel at and where they fall short is the difference between 10x productivity and hours wasted.</p>
-      <div class="sw-grid">
-        <div class="sw-card super">
-          <h3>✦ Agent Superpowers</h3>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Relentless persistence</strong> — they never stop trying</span></div>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Codebase exploration</strong> — grep through thousands of files in seconds</span></div>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Complex grep expressions</strong> — emit patterns that would "torture a human"</span></div>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Deep debugging</strong> — trace issues across nested job queues & services</span></div>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Rapid prototyping</strong> — full working demo in minutes</span></div>
-          <div class="sw-item"><span class="icon">⚡</span><span><strong>Concurrency handling</strong> — decent at spotting race conditions</span></div>
-        </div>
-        <div class="sw-card weak">
-          <h3>⚑ Watch Out For</h3>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Code duplication</strong> — they "make more of whatever's there"</span></div>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Context poisoning</strong> — goes down wrong path and doubles down</span></div>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Architecture smell</strong> — still can't judge optimal system design</span></div>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Prompt injection</strong> — vulnerable to untrusted input</span></div>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Training data bias</strong> — works best on what resembles its training set</span></div>
-          <div class="sw-item"><span class="icon">🚩</span><span><strong>Long-context decay</strong> — quality drops past 50% token window</span></div>
-        </div>
-      </div>
-    </div>
+    <a href="articles/superpowers.html" class="hub-card c-yellow">
+      <div class="card-num">06 — Know Your Agent</div>
+      <div class="card-title">Superpowers vs. Pitfalls</div>
+      <div class="card-desc">What agents excel at (persistence, grep, debugging) and where they fall short (duplication, architecture).</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="quote">
-      <div class="quote-card">
-        <span class="quote-mark">"</span>
-        <blockquote>I feel like I can do five people's worth of work in a single day. It's like rocket boosters. It's unbelievable.</blockquote>
-        <div class="attr">— Gary Tan, YC President, on Claude Code</div>
-      </div>
-    </div>
+    <a href="articles/who-benefits.html" class="hub-card c-pink">
+      <div class="card-num">07 — The New Mindset</div>
+      <div class="card-title">Who Benefits Most</div>
+      <div class="card-desc">Senior engineers, manager-brained builders, and designer-artists — why experience compounds with agents.</div>
+      <div class="card-arrow">Read article →</div>
+    </a>
 
-    <div class="section" id="mindset">
-      <div class="section-label">07 — The New Mindset</div>
-      <h2 class="section-title">Who Benefits Most</h2>
-      <p class="section-intro">The most productive users treat coding agents like a team of junior engineers — giving them clear, scoped tasks, solid test coverage, and reviewing their output.</p>
-      <div class="mindset-grid">
-        <div class="mindset-card"><div class="emoji">🎯</div><h4>Senior Engineers</h4><p>Can spot bad architecture, direct agents precisely, and turn quick ideas into shipped code with a few words.</p></div>
-        <div class="mindset-card"><div class="emoji">🧠</div><h4>Manager-Brained Builders</h4><p>Excel at juggling 10 parallel tasks, reviewing outputs, and context-switching between branches.</p></div>
-        <div class="mindset-card"><div class="emoji">🎨</div><h4>Designer-Artists</h4><p>Have taste for what belongs in the product. Can direct what stays and what goes — the "what" over the "how."</p></div>
-      </div>
-    </div>
-
-    <div class="section" id="video">
-      <div class="section-label">08 — Watch the Full Episode</div>
-      <h2 class="section-title">YC Light Cone</h2>
-      <div class="video-wrapper">
-        <iframe src="https://www.youtube.com/embed/qwmmWzPnhog" title="YC Light Cone - Coding Agents" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>
-      </div>
-    </div>
-
-  </main>
+  </div>
 </div>
 
 <footer class="footer">
@@ -743,32 +88,5 @@
   <a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch on YouTube →</a>
 </footer>
 
-<a href="#top" class="back-to-top" id="backToTop">
-  <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-    <polyline points="18 15 12 9 6 15"></polyline>
-  </svg>
-</a>
-
-<script>
-  window.addEventListener('scroll', () => {
-    const docH = document.documentElement.scrollHeight - window.innerHeight;
-    document.getElementById('progressBar').style.width = (window.scrollY / docH * 100) + '%';
-    document.getElementById('nav').classList.toggle('visible', window.scrollY > window.innerHeight * 0.6);
-    document.getElementById('backToTop').classList.toggle('visible', window.scrollY > 600);
-  });
-
-  const tocLinks = document.querySelectorAll('.toc-list a');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        tocLinks.forEach(l => l.classList.remove('active'));
-        const a = document.querySelector(`.toc-list a[href="#${entry.target.id}"]`);
-        if (a) a.classList.add('active');
-      }
-    });
-  }, { rootMargin: '-20% 0px -70% 0px' });
-
-  document.querySelectorAll('.section').forEach(s => { if (s.id) observer.observe(s); });
-</script>
 </body>
 </html>

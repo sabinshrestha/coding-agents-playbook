@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The "Dumb Zone" — Context Poisoning — Coding Agent Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-brand"><span class="ndot"></span> Coding Agent Playbook</a>
+  <ul class="nav-links">
+    <li><a href="../">All Articles</a></li>
+    <li><a href="tool-comparison.html">Compare</a></li>
+    <li><a href="10-tips.html">10 Tips</a></li>
+    <li><a href="superpowers.html">Strengths</a></li>
+  </ul>
+</nav>
+
+<div class="article-page">
+  <a href="../" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    All Articles
+  </a>
+
+  <div class="page-label">04 — Critical Warning</div>
+  <h1 class="page-title">The "Dumb Zone" — Context Poisoning</h1>
+  <p class="page-intro">One of the most important and least discussed concepts in working with coding agents. Understanding this single issue can save you hours of wasted work.</p>
+
+  <div class="article-section">
+    <div class="warning-banner">
+      <div class="warning-icon">⚠️</div>
+      <div>
+        <h3>Quality Degrades After ~50% Token Usage</h3>
+        <p>Calvin actively clears context whenever token usage crosses <span class="mono">~50%</span>. The model in a poisoned context is like a student with 5 minutes left on an exam — it panics and output quality drops sharply.</p>
+        <p style="margin-top:12px;">Dex from Human Layer (YC F24) calls this the <strong style="color:var(--accent-orange)">"dumb zone"</strong> — after a certain amount of tokens, the model just starts degrading in quality. This is especially true if you think about how reinforcement learning works during training.</p>
+        <div class="canary">
+          <strong>🐤 The Canary Trick</strong><br>
+          Plant a random fact at the start of your session — <em>"My name is Calvin. I drank tea at 8am."</em><br>
+          Periodically quiz the model. When it forgets → your context is poisoned → time to clear and restart.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <a href="architecture.html">
+      <span class="nav-label">← Previous</span>
+      <span class="nav-title">How Architectures Differ</span>
+    </a>
+    <a href="10-tips.html" class="next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">10 Tips to Become Top 1%</span>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <span>Source: YC Light Cone — Calvin French-Owen × Gary Tan — 2025</span>
+  <a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch on YouTube →</a>
+</footer>
+</body>
+</html>

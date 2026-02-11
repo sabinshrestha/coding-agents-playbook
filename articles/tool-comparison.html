@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tool Comparison Matrix — Coding Agent Playbook</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<nav class="nav">
+  <a href="../" class="nav-brand"><span class="ndot"></span> Coding Agent Playbook</a>
+  <ul class="nav-links">
+    <li><a href="../">All Articles</a></li>
+    <li><a href="your-arsenal.html">Tools</a></li>
+    <li><a href="10-tips.html">10 Tips</a></li>
+    <li><a href="superpowers.html">Strengths</a></li>
+  </ul>
+</nav>
+
+<div class="article-page">
+  <a href="../" class="back-link">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    All Articles
+  </a>
+
+  <div class="page-label">02 — Head to Head</div>
+  <h1 class="page-title">Tool Comparison Matrix</h1>
+  <p class="page-intro">A side-by-side breakdown to help you pick the right agent for the job at hand.</p>
+
+  <div class="article-section">
+    <div class="table-wrap">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th class="feature-col">Feature</th>
+            <th><span class="th-dot" style="background:var(--accent-cyan);box-shadow:0 0 8px var(--accent-cyan)"></span> Claude Code</th>
+            <th><span class="th-dot" style="background:var(--accent-green);box-shadow:0 0 8px var(--accent-green)"></span> Codex CLI</th>
+            <th><span class="th-dot" style="background:var(--accent-orange);box-shadow:0 0 8px var(--accent-orange)"></span> Cursor</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td class="feature-col">Interface</td><td>CLI (Terminal)</td><td>CLI (Sandbox)</td><td>IDE (VS Code fork)</td></tr>
+          <tr><td class="feature-col">Context Strategy</td><td><span class="cell-tag cyan-tag">Sub-agent splitting</span></td><td><span class="cell-tag green-tag">Periodic compaction</span></td><td><span class="cell-tag orange-tag">Semantic embeddings</span></td></tr>
+          <tr><td class="feature-col">Search Method</td><td>grep / ripgrep</td><td>grep / ripgrep</td><td>Vector embeddings</td></tr>
+          <tr><td class="feature-col">Best For</td><td>Daily coding, frontend, context-heavy tasks</td><td>Long-running jobs, deep debugging, Python monorepos</td><td>IDE-first workflows, quick edits, visual inspection</td></tr>
+          <tr><td class="feature-col">Session Length</td><td>Medium — clear at ~50%</td><td>Very long — 24-48hr jobs</td><td>Short-medium — per-file focus</td></tr>
+          <tr><td class="feature-col">Env Access</td><td><span class="cell-yes">✓</span> Full local (DB, prod, queues)</td><td><span class="cell-no">✗</span> Sandboxed by default</td><td><span class="cell-partial">~</span> IDE scope only</td></tr>
+          <tr><td class="feature-col">Code Review</td><td>Via external bots</td><td><span class="cell-yes">✓</span> Built-in, strong correctness</td><td><span class="cell-yes">✓</span> Bug bot built-in</td></tr>
+          <tr><td class="feature-col">Language Strength</td><td>Ruby/Rails, Frontend, JS</td><td>Python, monorepos (OpenAI-shaped)</td><td>Broad — follows IDE context</td></tr>
+          <tr><td class="feature-col">Superpower</td><td class="super-cell cyan-glow">Context splitting across sub-agents</td><td class="super-cell green-glow">RL-trained persistence on hard bugs</td><td class="super-cell orange-glow">Fast semantic search in IDE</td></tr>
+          <tr><td class="feature-col">Weakness</td><td>Context decay at 50%+ tokens</td><td>Sandbox limits real env access</td><td>Less freedom than CLI agents</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="article-nav">
+    <a href="your-arsenal.html">
+      <span class="nav-label">← Previous</span>
+      <span class="nav-title">Your Arsenal</span>
+    </a>
+    <a href="architecture.html" class="next">
+      <span class="nav-label">Next →</span>
+      <span class="nav-title">How Architectures Differ</span>
+    </a>
+  </div>
+</div>
+
+<footer class="footer">
+  <span>Source: YC Light Cone — Calvin French-Owen × Gary Tan — 2025</span>
+  <a href="https://www.youtube.com/watch?v=qwmmWzPnhog" target="_blank">Watch on YouTube →</a>
+</footer>
+</body>
+</html>
